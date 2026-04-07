@@ -4,24 +4,32 @@ import axios from "axios";
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import Skeleton from "../UI/Skeleton";
 
 const HotCollections = () => {
   const [authors, setAuthors] = useState([])
-  
-   async function fetchAuthors() {
-    const { data } = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections")
-    console.log(data)
-    setAuthors(data)
-  }
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    async function fetchAuthors() {
+      const { data } = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections");
+      setAuthors(data);
+    setLoading(false); 
+  }
     fetchAuthors();
     }, [])
 
   const options = {
     loop: true,
     margin: 10,
+    dots : false,
     nav: true,
-    items: 1,
+    responsive: {
+    0:    { items: 1 },
+    576:  { items: 2 },
+    992:  { items: 3 },
+    1200: { items: 4 },
+  },
   };
 
   return (
@@ -34,9 +42,10 @@ const HotCollections = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
+          {loading ? <Skeleton width="100%" height="200px" borderRadius="10px" /> : (
           <OwlCarousel className="owl-theme" {...options}>
           {authors.map((author) => (
-            <div className="item col-lg-3 col-md-6 col-sm-6 col-xs-12" key={author.id}>
+            <div className="item" key={author.id}>
               <div className="nft_coll">
                 <div className="nft_wrap">
                   <Link to="/item-details">
@@ -59,6 +68,7 @@ const HotCollections = () => {
             </div>
           ))}
           </OwlCarousel>
+          )}
         </div>
       </div>
     </section>
