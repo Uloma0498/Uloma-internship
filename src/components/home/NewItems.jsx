@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
-import nftImage from "../../images/nftImage.jpg";
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 import axios from "axios";
 
 const NewItems = () => {
   const [newItems, setNewItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
 
 
   useEffect(() => {
@@ -13,9 +16,23 @@ const NewItems = () => {
       const { data } = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems");
       console.log(data);
       setNewItems(data);
+      setLoading(false); 
     }
     fetchNewItems();
   }, []);
+
+  const options = {
+    loop: true,
+    margin: 10,
+    dots : false,
+    nav: true,
+    responsive: {
+    0:    { items: 1 },
+    576:  { items: 2 },
+    992:  { items: 3 },
+    1200: { items: 4 },
+  },
+  };
 
   return (
     <section id="section-items" className="no-bottom">
@@ -27,8 +44,10 @@ const NewItems = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
+          {loading ? <p>Loading...</p> : (
+          <OwlCarousel className="owl-theme" {...options}>
           {newItems.map((item) => (
-            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={item.id}>
+            <div className="item" key={item.id}>
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link
@@ -83,6 +102,8 @@ const NewItems = () => {
               </div>
             </div>
           ))}
+          </OwlCarousel>
+          )}
         </div>
       </div>
     </section>
