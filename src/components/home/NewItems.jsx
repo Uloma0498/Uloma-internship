@@ -4,18 +4,18 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import axios from "axios";
+import Skeleton from "../UI/Skeleton";
 
 const NewItems = () => {
   const [newItems, setNewItems] = useState([]);
+  const [countDown, setCountDown] = useState({});
   const [loading, setLoading] = useState(true);
-  const [countdown, setCountdown] = useState({});
   
 
 
   useEffect(() => {
     async function fetchNewItems() {
       const { data } = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems");
-      console.log(data);
       setNewItems(data);
       setLoading(false); 
     }
@@ -24,14 +24,14 @@ const NewItems = () => {
 
   useEffect(() => {
     const timerId = setInterval(() => {
-      const newCountdown = {};
+      const newCountDown = {};
       newItems.forEach(item => {
         if (item.expiryDate && !isNaN(new Date(item.expiryDate))) {
           const timeleft = calculateTimeLeft(item.expiryDate);
-          newCountdown[item.id] = timeleft;
+          newCountDown[item.id] = timeleft;
         }
       });
-      setCountdown(newCountdown);
+      setCountDown(newCountDown);
     }, 1000);
     return () => clearInterval(timerId);
   }, [newItems]);
@@ -73,11 +73,11 @@ const NewItems = () => {
             </div>
           </div>
           {loading ? (
-            <p>Loading...</p>
+            <Skeleton width="100%" height="200px" borderRadius="10px" />
           ) : (
           <OwlCarousel className="owl-theme" {...options}>
            {newItems.map((item) => {
-            const timeleft = countdown[item.id];
+            const timeleft = countDown[item.id];
             return (
             <div className="item" key={item.id}>
               <div className="nft__item">
