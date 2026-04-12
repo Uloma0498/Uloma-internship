@@ -8,7 +8,8 @@ import axios from "axios";
 const NewItems = () => {
   const [newItems, setNewItems] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [countdown, setCountdown] = useState({});
+  
 
 
   useEffect(() => {
@@ -20,6 +21,33 @@ const NewItems = () => {
     }
     fetchNewItems();
   }, []);
+
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      const newCountdown = {};
+      newItems.forEach(item => {
+        if (item.expiryDate && !isNaN(new Date(item.expiryDate))) {
+          const timeleft = calculateTimeLeft(item.expiryDate);
+          newCountdown[item.id] = timeleft;
+        }
+      });
+      setCountdown(newCountdown);
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, [newItems]);
+
+  const calculateTimeLeft = (expiryDate) => {
+    const currentTime = Date.now();
+    const expiryTime = new Date(expiryDate).getTime();
+    return Math.max(0, Math.floor((expiryTime - currentTime) / 1000));
+  };
+ 
+  const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(secs).padStart(2, '0')}`;
+  };
 
   const options = {
     loop: true,
@@ -44,9 +72,13 @@ const NewItems = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          {loading ? <p>Loading...</p> : (
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
           <OwlCarousel className="owl-theme" {...options}>
-          {newItems.map((item) => (
+           {newItems.map((item) => {
+            const timeleft = countdown[item.id];
+            return (
             <div className="item" key={item.id}>
               <div className="nft__item">
                 <div className="author_list_pp">
@@ -54,13 +86,15 @@ const NewItems = () => {
                     to="/author"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
-                    title="Creator: Monica Lucas"
+                    title={`Creator: ${item.creator}`}
                   >
                     <img className="lazy" src={item.authorImage} alt="" />
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>
-                <div className="de_countdown">5h 30m 32s</div>
+                <div className="de_countdown">
+                   {timeleft !== undefined ? (timeleft > 0 ? formatTime(timeleft) : "EXPIRED") : null} 
+                </div>
 
                 <div className="nft__item_wrap">
                   <div className="nft__item_extra">
@@ -101,7 +135,8 @@ const NewItems = () => {
                 </div>
               </div>
             </div>
-          ))}
+            );
+           })}
           </OwlCarousel>
           )}
         </div>
