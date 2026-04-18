@@ -100,7 +100,7 @@ const NewItems = () => {
                 </div>
                 {item.expiryDate && (
                   <div className="de_countdown">
-                    {timeleft !== undefined ? (timeleft > 0 ? formatTime(timeleft) : "EXPIRED") : null}
+                    {item.expiryDate && <Countdown expiryDate={item.expiryDate} />}
                   </div>
                 )}
 
