@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
@@ -6,7 +6,7 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
 
-const NewItems = () => {
+const NewItems = React.memo(() => {
   const [newItems, setNewItems] = useState([]);
   const [countDown, setCountDown] = useState({});
   const [loading, setLoading] = useState(true);
@@ -36,11 +36,11 @@ const NewItems = () => {
     return () => clearInterval(timerId);
   }, [newItems]);
 
-  const calculateTimeLeft = (expiryDate) => {
+  const calculateTimeLeft = useCallback((expiryDate) => {
     const currentTime = Date.now();
     const expiryTime = new Date(expiryDate).getTime();
     return Math.max(0, Math.floor((expiryTime - currentTime) / 1000));
-  };
+  }, []);
  
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
@@ -143,6 +143,6 @@ const NewItems = () => {
       </div>
     </section>
   );
-};
+});
 
 export default NewItems;
