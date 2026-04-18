@@ -6,7 +6,7 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
 
-const NewItems = React.memo(() => {
+const NewItems = () => {
   const [newItems, setNewItems] = useState([]);
   const [countDown, setCountDown] = useState({});
   const [loading, setLoading] = useState(true);
@@ -22,25 +22,31 @@ const NewItems = React.memo(() => {
     fetchNewItems();
   }, []);
 
-  useEffect(() => {
-    const timerId = setInterval(() => {
-      const newCountDown = {};
-      newItems.forEach(item => {
-        if (item.expiryDate && !isNaN(new Date(item.expiryDate))) {
-          const timeleft = calculateTimeLeft(item.expiryDate);
-          newCountDown[item.id] = timeleft;
-        }
-      });
-      setCountDown(newCountDown);
-    }, 1000);
-    return () => clearInterval(timerId);
-  }, [newItems]);
+  const Countdown = ({ expiryDate }) => {
+  const ref = React.useRef();
 
-  const calculateTimeLeft = useCallback((expiryDate) => {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!expiryDate) return;
+
+      const timeLeft = new Date(expiryDate) - new Date();
+      if (ref.current) {
+        ref.current.innerText = formatTime(timeLeft);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [expiryDate]);
+
+  return <div ref={ref} />;
+};
+
+
+  const calculateTimeLeft = (expiryDate) => {
     const currentTime = Date.now();
     const expiryTime = new Date(expiryDate).getTime();
     return Math.max(0, Math.floor((expiryTime - currentTime) / 1000));
-  }, []);
+  };
  
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
@@ -92,9 +98,11 @@ const NewItems = React.memo(() => {
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>
-                <div className="de_countdown">
-                   {timeleft !== undefined ? (timeleft > 0 ? formatTime(timeleft) : "EXPIRED") : null} 
-                </div>
+                {item.expiryDate && (
+                  <div className="de_countdown">
+                    {timeleft !== undefined ? (timeleft > 0 ? formatTime(timeleft) : "EXPIRED") : null}
+                  </div>
+                )}
 
                 <div className="nft__item_wrap">
                   <div className="nft__item_extra">
@@ -143,6 +151,6 @@ const NewItems = React.memo(() => {
       </div>
     </section>
   );
-});
+};
 
 export default NewItems;
