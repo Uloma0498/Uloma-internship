@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
@@ -8,7 +8,7 @@ import Skeleton from "../UI/Skeleton";
 
 const NewItems = () => {
   const [newItems, setNewItems] = useState([]);
-  const [countDown, setCountDown] = useState({});
+  const [countDown] = useState({});
   const [loading, setLoading] = useState(true);
   
 
@@ -46,12 +46,6 @@ const NewItems = () => {
 
   return <div ref={ref} />;
 };
-
-  const calculateTimeLeft = (expiryDate) => {
-    const currentTime = Date.now();
-    const expiryTime = new Date(expiryDate).getTime();
-    return Math.max(0, Math.floor((expiryTime - currentTime) / 1000));
-  };
  
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
