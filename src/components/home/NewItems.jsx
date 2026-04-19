@@ -26,21 +26,26 @@ const NewItems = () => {
   const ref = React.useRef();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (!expiryDate) return;
+    if (!expiryDate) return;
 
-      const timeLeft = new Date(expiryDate) - new Date();
+    const updateTimer = () => {
+      const timeLeftMs = new Date(expiryDate) - new Date();
+      const timeLeftSeconds = Math.max(0, Math.floor(timeLeftMs / 1000));
+
       if (ref.current) {
-        ref.current.innerText = formatTime(timeLeft);
+        ref.current.innerText =
+          timeLeftSeconds > 0 ? formatTime(timeLeftSeconds) : "EXPIRED";
       }
-    }, 1000);
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
 
     return () => clearInterval(interval);
   }, [expiryDate]);
 
   return <div ref={ref} />;
 };
-
 
   const calculateTimeLeft = (expiryDate) => {
     const currentTime = Date.now();
