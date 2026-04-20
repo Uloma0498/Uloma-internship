@@ -10,7 +10,6 @@ const NewItems = () => {
   const [newItems, setNewItems] = useState([]);
   const [countDown] = useState({});
   const [loading, setLoading] = useState(true);
-  
 
 
   useEffect(() => {
