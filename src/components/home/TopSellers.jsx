@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
-import AuthorImage from "../../images/author_thumbnail.jpg";
 
 const TopSellers = () => {
   const [topSellers, setTopSellers] = useState([]);
@@ -11,7 +10,6 @@ const TopSellers = () => {
   useEffect(() => {
       async function fetchTopSellers() {
         const { data } = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers");
-        console.log(data);
         setTopSellers(data);
         setLoading(false); 
       }
@@ -29,6 +27,9 @@ const TopSellers = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
+          {loading ? ( 
+            <Skeleton width="100%" height="200px" borderRadius="10px" />
+          ) : (
           <div className="col-md-12">
             <ol className="author_list">
               {topSellers.map((seller) => (
@@ -51,6 +52,7 @@ const TopSellers = () => {
               ))}
             </ol>
           </div>
+          )}
         </div>
       </div>
     </section>
