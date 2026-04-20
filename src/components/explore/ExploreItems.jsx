@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 
 const ExploreItems = () => {
+  const [explores, setExplores] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+
+   useEffect(() => {
+      async function fetchExplores() {
+        const { data } = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/explore");
+        console.log(data);
+        setExplores(data);
+        setLoading(false); 
+      }
+      fetchExplores();
+    }, []);
+
+
   return (
     <>
       <div>
@@ -14,9 +30,9 @@ const ExploreItems = () => {
           <option value="likes_high_to_low">Most liked</option>
         </select>
       </div>
-      {new Array(8).fill(0).map((_, index) => (
+      {explores.map((explore) => (
         <div
-          key={index}
+          key={explore.id} 
           className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
           style={{ display: "block", backgroundSize: "cover" }}
         >
@@ -52,17 +68,17 @@ const ExploreItems = () => {
                 </div>
               </div>
               <Link to="/item-details">
-                <img src={nftImage} className="lazy nft__item_preview" alt="" />
+                <img src={explore.authorImage} className="lazy nft__item_preview" alt="" />
               </Link>
             </div>
             <div className="nft__item_info">
               <Link to="/item-details">
-                <h4>Pinky Ocean</h4>
+                <h4>{explore.title}</h4>
               </Link>
-              <div className="nft__item_price">1.74 ETH</div>
+              <div className="nft__item_price">{explore.price} ETH</div>
               <div className="nft__item_like">
                 <i className="fa fa-heart"></i>
-                <span>69</span>
+                <span>{explore.likes}</span>
               </div>
             </div>
           </div>
