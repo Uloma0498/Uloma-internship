@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import ItemCard from "../ItemCard.jsx"
+import NftItem from "../NftItem";
+import Skeleton from "../UI/Skeleton";
 
 const ExploreItems = () => {
   const [explores, setExplores] = useState([]);
@@ -42,11 +43,17 @@ const ExploreItems = () => {
           <option value="likes_high_to_low">Most liked</option>
         </select>
       </div>
-      <div>
+      <div className="row">
       {loading ? (
-        <p>Loading...</p>
+        <Skeleton width="100%" height="200px" borderRadius="10px" />
       ) : (explores.slice(0, visibleNum).map((explore) => (
-        <ItemCard key={explore.id} item={explore} />
+        <div 
+          key={explore.id}
+          className="col-lg-3 col-md-4 col-sm-6 mb-4"
+          style={{ display: "block", backgroundSize: "cover" }}
+        >
+        <NftItem item={explore} />
+        </div>
       ))
       )}
       </div>

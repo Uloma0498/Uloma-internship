@@ -5,7 +5,7 @@ import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
-import ItemCard from "../ItemCard";
+import NftItem from "../NftItem";
 
 const NewItems = () => {
   const [newItems, setNewItems] = useState([]);
@@ -49,7 +49,9 @@ const NewItems = () => {
           ) : (
           <OwlCarousel className="owl-theme" {...options}>
            {newItems.map((item) => (
-            <ItemCard key={item.id} item={item} />
+            <div className="item" key={item.id}>
+              <NftItem item={item} />
+              </div>
            ))}
           </OwlCarousel>
           )}
