@@ -9,9 +9,6 @@ const AuthorItems = ({ authorId }) => {
 
   useEffect(() => {
     console.log("authorId:", authorId);
-    console.log(
-  `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
-);
     async function fetchItems() {
       const { data } = await axios.get(
   `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`

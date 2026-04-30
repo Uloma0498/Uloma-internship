@@ -8,22 +8,13 @@ const AuthorItems = ({ authorId }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    console.log("authorId:", authorId);
-    console.log(
-  `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
-);
     async function fetchItems() {
-      const { data } = await axios.get(
-  `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
-);
-
-console.log("API data:", data);
-
-setItems(data);
-    }
-
+      const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`);
+      console.log("items state:", JSON.stringify(items)); 
+      setItems(data.data); 
+  }
     fetchItems();
-  }, [authorId]);
+    }, [authorId])
 
   return (
     <div className="de_tab_content">
