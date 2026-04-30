@@ -66,7 +66,7 @@ const Author = () => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">{authorData.followers}</div>
+                      <div className="profile_follower">{authorData}</div>
                       <Link to="#" className="btn-main">
                         Follow
                       </Link>
