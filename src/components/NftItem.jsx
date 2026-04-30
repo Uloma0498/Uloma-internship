@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Countdown = ({ expiryDate }) => {
@@ -38,7 +38,7 @@ const NftItem = ({ item }) => {
     <div className="nft__item">
       <div className="author_list_pp">
         <Link
-          to="/author"
+          to={`/author/${item.id}`}
           data-bs-toggle="tooltip"
           data-bs-placement="top"
           title={`Creator: ${item.creator}`}
