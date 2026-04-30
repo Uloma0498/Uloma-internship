@@ -76,9 +76,10 @@ const Author = () => {
               </div>
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems items={authorData.nftCollection || []} />
+                  <AuthorItems authorId={authorId} />
                 </div>
               </div>
+              ))}
             </div>
           </div>
         </section>

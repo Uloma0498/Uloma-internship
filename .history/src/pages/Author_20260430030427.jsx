@@ -76,7 +76,7 @@ const Author = () => {
               </div>
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems items={authorData.nftCollection || []} />
+                  <AuthorItems items={authorData.nftCollection } />
                 </div>
               </div>
             </div>

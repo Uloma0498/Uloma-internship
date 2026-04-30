@@ -4,14 +4,24 @@ import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 
-const AuthorItems = ({ items }) => {
-  
+const AuthorItems = ({ authorId }) => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    async function fetchItems() {
+      const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${}`);
+     console.log("API data:", data);
+     setItems(data);
+    }
+
+    fetchItems();
+  }, [authorId]);
 
   return (
     <div className="de_tab_content">
       <div className="tab-1">
         <div className="row">
-           {items.map((item) => (
+           {Array.isArray(items) && items.map((item) => (
             <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={item.id}>
               <div className="nft__item">
                 <div className="author_list_pp">
