@@ -9,9 +9,13 @@ const AuthorItems = ({ authorId }) => {
 
   useEffect(() => {
     async function fetchItems() {
-      const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`);
-     console.log("API data:", data);
-     setItems(data);
+      const { data } = await axios.get(
+  `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
+);
+
+console.log("API data:", data);
+
+setItems(data);
     }
 
     fetchItems();
