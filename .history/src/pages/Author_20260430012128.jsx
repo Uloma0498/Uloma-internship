@@ -6,15 +6,14 @@ import AuthorImage from "../images/author_thumbnail.jpg";
 import axios from "axios";
 
 const Author = () => {
-  const { authorId } = useParams();
+  const { id } = useParams();
   const [authorData, setAuthorData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(authorId);
     const fetchAuthorData = async () => {
       try {
-        const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`);
+        const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${}`);
         setAuthorData(data);
       } catch (error) {
         console.error("Error fetching items:", error);
@@ -23,8 +22,8 @@ const Author = () => {
       }
     };
 
-    fetchAuthorData();
-  }, [authorId]);
+    fetchItems();
+  }, [id]);
 
   return (
     <div id="wrapper">
@@ -42,7 +41,6 @@ const Author = () => {
         <section aria-label="section">
           <div className="container">
             <div className="row">
-
               <div className="col-md-12">
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
@@ -74,13 +72,12 @@ const Author = () => {
                   </div>
                 </div>
               </div>
-              {authorData.nftCollection?.map((item) => (
+
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems authorId={authorId} />
+                  <AuthorItems authorId={id} />
                 </div>
               </div>
-              ))}
             </div>
           </div>
         </section>

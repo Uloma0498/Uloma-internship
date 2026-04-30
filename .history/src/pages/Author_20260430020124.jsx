@@ -80,7 +80,7 @@ const Author = () => {
                   <AuthorItems authorId={authorId} />
                 </div>
               </div>
-              ))}
+              ))
             </div>
           </div>
         </section>

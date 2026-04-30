@@ -74,13 +74,13 @@ const Author = () => {
                   </div>
                 </div>
               </div>
-              {authorData.nftCollection?.map((item) => (
+              
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
                   <AuthorItems authorId={authorId} />
                 </div>
               </div>
-              ))}
+              ))
             </div>
           </div>
         </section>

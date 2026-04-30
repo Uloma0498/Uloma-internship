@@ -42,7 +42,7 @@ const Author = () => {
         <section aria-label="section">
           <div className="container">
             <div className="row">
-
+              
               <div className="col-md-12">
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
@@ -74,13 +74,12 @@ const Author = () => {
                   </div>
                 </div>
               </div>
-              {authorData.nftCollection?.map((item) => (
+
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
                   <AuthorItems authorId={authorId} />
                 </div>
               </div>
-              ))}
             </div>
           </div>
         </section>
