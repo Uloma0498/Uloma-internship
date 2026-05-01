@@ -2,9 +2,8 @@ import React, {useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link, useParams } from "react-router-dom";
+import AuthorImage from "../images/author_thumbnail.jpg";
 import axios from "axios";
-import Skeleton from "../components/UI/Skeleton";
-
 
 const Author = () => {
   const { authorId } = useParams();
@@ -17,6 +16,7 @@ const Author = () => {
     const fetchAuthorData = async () => {
       try {
         const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`);
+        console.log(data);
         setAuthorData(data);
         setFollowerCount(data.followers || 0); 
       } catch (error) {
@@ -37,10 +37,6 @@ const Author = () => {
   }
   setIsFollowing(!isFollowing); 
 };
-
-if (loading) {
-    return <Skeleton />;
-  }
 
   return (
     <div id="wrapper">
@@ -63,7 +59,7 @@ if (loading) {
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={authorData.authorImage} alt="" />
+                      <img src={authorData.authorImage} alt={authorData.authorName} />
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
@@ -92,7 +88,7 @@ if (loading) {
               </div>
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems authorImage={authorData.authorImage} items={authorData.nftCollection || []} />
+                  <AuthorItems items={authorData.nftCollection || []} />
                 </div>
               </div>
             </div>

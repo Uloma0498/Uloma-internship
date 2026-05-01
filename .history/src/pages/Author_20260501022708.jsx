@@ -2,8 +2,8 @@ import React, {useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link, useParams } from "react-router-dom";
+import AuthorImage from "../images/author_thumbnail.jpg";
 import axios from "axios";
-import Skeleton from "../components/UI/Skeleton";
 
 
 const Author = () => {
@@ -17,6 +17,7 @@ const Author = () => {
     const fetchAuthorData = async () => {
       try {
         const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`);
+        console.log(data);
         setAuthorData(data);
         setFollowerCount(data.followers || 0); 
       } catch (error) {
@@ -41,6 +42,7 @@ const Author = () => {
 if (loading) {
     return <Skeleton />;
   }
+
 
   return (
     <div id="wrapper">

@@ -42,6 +42,7 @@ if (loading) {
     return <Skeleton />;
   }
 
+
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
