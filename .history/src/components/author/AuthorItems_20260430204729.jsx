@@ -4,7 +4,8 @@ import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 
-const AuthorItems = ({ items }) => {
+const AuthorItems = () => {
+  const [items, setItems] = useState([]);
 
   return (
     <div className="de_tab_content">
@@ -15,7 +16,7 @@ const AuthorItems = ({ items }) => {
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link to="">
-                    <img className="lazy" src={AuthorImage} alt="" />
+                    <img className="lazy" src={uthorImage} alt="" />
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>

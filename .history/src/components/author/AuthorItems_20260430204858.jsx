@@ -4,7 +4,8 @@ import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 
-const AuthorItems = ({ items }) => {
+const AuthorItems = ({items}) => {
+  const [items, setItems] = useState([]);
 
   return (
     <div className="de_tab_content">

@@ -4,7 +4,20 @@ import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 
-const AuthorItems = ({ items }) => {
+const AuthorItems = () => {
+  const { authorId } = useParams();
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    async function fetchItems() {
+      const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`);
+     setItems(data);
+    }
+
+    fetchItems();
+  }, []);
+
+  
 
   return (
     <div className="de_tab_content">
@@ -15,7 +28,7 @@ const AuthorItems = ({ items }) => {
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link to="">
-                    <img className="lazy" src={AuthorImage} alt="" />
+                    <img className="lazy" src={item.authorImage} alt="" />
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>

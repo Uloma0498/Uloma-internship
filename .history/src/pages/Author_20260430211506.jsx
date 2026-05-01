@@ -7,7 +7,7 @@ import axios from "axios";
 
 const Author = () => {
   const { authorId } = useParams();
-  const [authorData, setAuthorData] = useState([]);
+  const [authorData, setAuthorData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [followerCount, setFollowerCount] = useState(0);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -18,7 +18,7 @@ const Author = () => {
         const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`);
         console.log(data);
         setAuthorData(data);
-        setFollowerCount(data.followers || 0); 
+        setFollowerCount(authorDatadata.followers || 0); 
       } catch (error) {
         console.error("Error fetching items:", error);
       } finally {

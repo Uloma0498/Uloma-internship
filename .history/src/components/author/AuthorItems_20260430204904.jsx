@@ -5,6 +5,7 @@ import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 
 const AuthorItems = ({ items }) => {
+  const [items, setItems] = useState([]);
 
   return (
     <div className="de_tab_content">

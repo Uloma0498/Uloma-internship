@@ -9,7 +9,7 @@ const Author = () => {
   const { authorId } = useParams();
   const [authorData, setAuthorData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [followerCount, setFollowerCount] = useState(0);
+  const [followerCount, setFollowerCount] = useState(authorData.followers || 0);
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
