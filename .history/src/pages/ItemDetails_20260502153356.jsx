@@ -14,6 +14,7 @@ const ItemDetails = () => {
         const fetchDetails = async () => {
             try {
                 const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${nftId}`);
+                console.log(dat
                 setDetails(data); 
                 setLoading(false); 
             } catch (error) {

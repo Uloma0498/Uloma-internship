@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react"; 
 import EthImage from "../images/ethereum.svg"; 
 import { Link, useParams } from "react-router-dom"; 
+import AuthorImage from "../images/author_thumbnail.jpg"; 
+import nftImage from "../images/nftImage.jpg"; 
 import axios from "axios";
 import Skeleton from "../components/UI/Skeleton";
 
 
 const ItemDetails = () => {
-  const { nftId } = useParams(); 
-    const [details, setDetails] = useState(null); 
-    const [loading, setLoading] = useState(true);
+  const { nftId } = useParams(); // Getting nftId from the URL
+    const [details, setDetails] = useState(null); // Initialize state to hold details
+    const [loading, setLoading] = useState(true); // Initialize loading state
 
     useEffect(() => {
         const fetchDetails = async () => {
             try {
                 const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${nftId}`);
+                console.log(data); 
                 setDetails(data); 
                 setLoading(false); 
             } catch (error) {
