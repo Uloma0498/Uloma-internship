@@ -30,7 +30,7 @@ const TopSellers = () => {
           {loading ? ( 
             <Skeleton width="100%" height="200px" borderRadius="10px" />
           ) : (
-          <div className="col-md-12" data-aos="fade-zoom-in" data-aos-delay="100" data-aos-easing="ease-in-back" data-aos-offset="0">
+          <div className="col-md-12" data-aos="fade-" data-aos-delay="100" data-aos-easing="ease-in-back" data-aos-offset="0">
             <ol className="author_list">
               {topSellers.map((seller) => (
                 <li key={seller.id}>
