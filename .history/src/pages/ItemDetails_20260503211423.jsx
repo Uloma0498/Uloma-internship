@@ -37,7 +37,7 @@ const ItemDetails = () => {
                   <Skeleton />
                 </div>
               ) : (
-                <>
+                <></>
            <div className="col-md-6 text-center"> 
             <img src={details.nftImage} className="img-fluid img-rounded mb-sm-30 nft-image" alt="" /> 
              </div> 
@@ -95,8 +95,6 @@ const ItemDetails = () => {
               </div> 
             </div> 
           </div> 
-          </>
-         )}
         </div> 
       </div> 
     </section> 
